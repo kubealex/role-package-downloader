@@ -1,0 +1,22 @@
+---
+# tasks file for role-package-downloader
+- name: retrieve an access token
+  uri:
+    url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+    body:
+      grant_type: refresh_token
+      client_id: rhsm-api
+      refresh_token: "{{ rhsm_api_offline_token }}"
+    body_format: form-urlencoded
+    method: POST
+  register: response
+
+# Workaround to non-working uri module on success
+- name: retrieve image download URL
+  shell: 'curl -H "Authorization: Bearer {{ response.json.access_token }}" https://api.access.redhat.com/management/v1/images/{{ installer_checksum }}/download'
+  register: installer_archive_info
+
+- name: set result as facts
+  ansible.builtin.set_fact:
+    installer_url: "{{ (installer_archive_info.stdout | from_json).body.href }}"
+    installer_package: "{{(installer_archive_info.stdout | from_json).body.filename }}"
