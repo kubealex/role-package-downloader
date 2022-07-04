@@ -29,7 +29,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - role: role-package-downloader
+        - role: role-package-downloader
           vars:
             rh_api_offline_token: <YOUR TOKEN HERE>
             rh_product_checksum: "{{ rhel.86.binary }}"
