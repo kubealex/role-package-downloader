@@ -1,34 +1,26 @@
----
-# tasks file for role-package-downloader
-- name: retrieve an access token
-  ansible.builtin.uri:
-    url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
-    body:
-      grant_type: refresh_token
-      client_id: rhsm-api
-      refresh_token: "{{ rh_api_offline_token }}"
-    body_format: form-urlencoded
-    method: POST
-  register: response
-
-# HANGING FOREVER
-#    - name: Retrieve image download URL
-#      ansible.builtin.uri:
-#        url: https://api.access.redhat.com/management/v1/images/{{ checksum.rhel8 }}/download
-#        return_content: true
-#        follow_redirects: all
-#        headers:
-#          Content-Type: application/json
-#          Authorization: 'Bearer {{ response.json.access_token }}'
-#          User-Agent: curl/7.61.1
-#      register: imageurl
-
-# Workaround to non-working uri module on success
-- name: retrieve image download URL
-  ansible.builtin.shell: 'curl -H "Authorization: Bearer {{ response.json.access_token }}" https://api.access.redhat.com/management/v1/images/{{ rh_product_checksum }}/download'
-  register: installer_archive_info
-
-- name: set result as facts
-  ansible.builtin.set_fact:
-    installer_url: "{{ (installer_archive_info.stdout | from_json).body.href }}"
-    installer_package: "{{(installer_archive_info.stdout | from_json).body.filename }}"
+ --- 
+ # tasks file for role-package-downloader
+ - name: retrieve an access token
+   ansible.builtin.uri:
+     url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+     body:
+       grant_type: refresh_token
+       client_id: rhsm-api
+       refresh_token: "{{ rh_api_offline_token }}"
+     body_format: form-urlencoded
+     method: POST
+   register: response
+     
+ - name: Retrieve image download URL
+   ansible.builtin.uri: 
+     url: https://api.access.redhat.com/management/v1/images/{{ rh_product_checksum }}/download
+     follow_redirects: no
+     headers:
+       Authorization: 'Bearer {{ response.json.access_token }}'
+     status_code: 307 
+   register: package_info
+   
+ - name: set result as facts
+   ansible.builtin.set_fact:
+     installer_url: "{{ package_info.json.body.href }}"
+     installer_package: "{{ package_info.json.body.filename }}" 27     
