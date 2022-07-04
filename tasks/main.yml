@@ -6,7 +6,7 @@
     body:
       grant_type: refresh_token
       client_id: rhsm-api
-      refresh_token: "{{ rhsm_api_offline_token }}"
+      refresh_token: "{{ rh_api_offline_token }}"
     body_format: form-urlencoded
     method: POST
   register: response
@@ -25,7 +25,7 @@
 
 # Workaround to non-working uri module on success
 - name: retrieve image download URL
-  ansible.builtin.shell: 'curl -H "Authorization: Bearer {{ response.json.access_token }}" https://api.access.redhat.com/management/v1/images/{{ installer_checksum }}/download'
+  ansible.builtin.shell: 'curl -H "Authorization: Bearer {{ response.json.access_token }}" https://api.access.redhat.com/management/v1/images/{{ rh_product_checksum }}/download'
   register: installer_archive_info
 
 - name: set result as facts
