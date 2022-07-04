@@ -1,2 +1,3 @@
 ---
 # defaults file for role-package-downloader
+rhsm_api_offline_token: 

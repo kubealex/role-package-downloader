@@ -1,22 +1,26 @@
-Role Name
+Package downloader
 =========
 
-A brief description of the role goes here.
+This role allows downloading ISO and setup bundles for most common RH products. It uses the API token to interact with Red Hat API.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+The role doesn't have specific requirements
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+The only required values are:
+  rh_api_offline_token - The Red Hat offline token that can be retrieved (here)[https://access.redhat.com/management/api]
+
+  rh_product_checksum - The checksum of the package to download. They can be retrieved (here)[https://access.redhat.com/downloads/] or you can use some of the common one under *vars* folder
+
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+No dependencies
 
 Example Playbook
 ----------------
@@ -25,7 +29,10 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { role: username.rolename, x: 42 }
+         - role: role-package-downloader
+          vars:
+            rh_api_offline_token: <YOUR TOKEN HERE>
+            rh_product_checksum: "{{ rhel.86.binary }}"
 
 License
 -------

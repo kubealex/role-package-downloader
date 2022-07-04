@@ -1,7 +1,7 @@
 ---
 # tasks file for role-package-downloader
 - name: retrieve an access token
-  uri:
+  ansible.builtin.uri:
     url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
     body:
       grant_type: refresh_token
@@ -11,9 +11,21 @@
     method: POST
   register: response
 
+# HANGING FOREVER
+#    - name: Retrieve image download URL
+#      ansible.builtin.uri:
+#        url: https://api.access.redhat.com/management/v1/images/{{ checksum.rhel8 }}/download
+#        return_content: true
+#        follow_redirects: all
+#        headers:
+#          Content-Type: application/json
+#          Authorization: 'Bearer {{ response.json.access_token }}'
+#          User-Agent: curl/7.61.1
+#      register: imageurl
+
 # Workaround to non-working uri module on success
 - name: retrieve image download URL
-  shell: 'curl -H "Authorization: Bearer {{ response.json.access_token }}" https://api.access.redhat.com/management/v1/images/{{ installer_checksum }}/download'
+  ansible.builtin.shell: 'curl -H "Authorization: Bearer {{ response.json.access_token }}" https://api.access.redhat.com/management/v1/images/{{ installer_checksum }}/download'
   register: installer_archive_info
 
 - name: set result as facts
