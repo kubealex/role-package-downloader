@@ -20,11 +20,11 @@ Role Variables
 
 The only required values are:
 
-  rh_api_offline_token - The Red Hat offline token that can be retrieved (here)[https://access.redhat.com/management/api]
+    rh_api_offline_token - The Red Hat offline token that can be retrieved [here](https://access.redhat.com/management/api)
 
-  rh_product_checksum - The checksum of the package to download. They can be retrieved (here)[https://access.redhat.com/downloads/] or you can use some of the common one under *vars* folder
+    rh_product_checksum - The checksum of the package to download. They can be retrieved [here](https://access.redhat.com/downloads/) or you can use some of the common one under *vars* folder
 
-  rh_product_path - The location to save the file to. Defaults to the playbook directory.
+    rh_product_path - The location to save the file to. Defaults to the playbook directory.
 
 Dependencies
 ------------
