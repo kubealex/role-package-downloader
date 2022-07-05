@@ -11,16 +11,25 @@
     method: POST
   register: response
 
-- name: Retrieve image download URL
+- name: retrieve image download URL
   ansible.builtin.uri: 
     url: https://api.access.redhat.com/management/v1/images/{{ rh_product_checksum }}/download
     follow_redirects: no
     headers:
       Authorization: 'Bearer {{ response.json.access_token }}'
     status_code: 307 
-  register: package_info
+  register: product_info
 
 - name: set result as facts
   ansible.builtin.set_fact:
-    installer_url: "{{ package_info.json.body.href }}"
-    installer_package: "{{ package_info.json.body.filename }}"
+    product_url: "{{ product_info.json.body.href }}"
+    product_filename: "{{ product_info.json.body.filename }}"
+
+- name: retrieve package
+  get_url:
+    url: "{{ product_url }}"
+    dest: "{{ rh_product_path | default(playbook_dir, true) }}/{{ product_filename }}"
+
+- name: output
+  debug:
+    msg: The package {{ product_filename }} has been downloaded in {{ rh_product_path | default(playbook_dir, true) }}
