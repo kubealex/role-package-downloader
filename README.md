@@ -42,7 +42,7 @@ Including an example of how to use your role (for instance, with variables passe
           vars:
             rh_api_offline_token: <YOUR TOKEN HERE>
             rh_product_checksum: "{{ rhel.86.binary }}"
-
+            rh_product_path: <YOUR PATH HERE>
 License
 -------
 
