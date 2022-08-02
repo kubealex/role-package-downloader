@@ -28,8 +28,8 @@
 - name: retrieve package
   get_url:
     url: "{{ product_url }}"
-    dest: "{{ rh_product_path | default(playbook_dir, true) }}/{{ product_filename }}"
+    dest: "{{ rh_product_path | default(playbook_dir, true) }}/{{ rh_product_filename | default(product_filename, true) }}"
 
 - name: output
   debug:
-    msg: The package {{ product_filename }} has been downloaded in {{ rh_product_path | default(playbook_dir, true) }}
+    msg: The package {{ rh_product_filename | default(product_filename, true) }} has been downloaded in {{ rh_product_path | default(playbook_dir, true) }}

@@ -26,6 +26,8 @@ The only required values are:
 
     rh_product_path - The location to save the file to. Defaults to the playbook directory.
 
+    rh_product_filename - The name of the package if different from the original one.
+
 Dependencies
 ------------
 

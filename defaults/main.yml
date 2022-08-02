@@ -1,4 +1,5 @@
 ---
 # defaults file for role-package-downloader
 rh_api_offline_token: 
-rh_product_path: 
+rh_product_path:
+rh_product_filename:
