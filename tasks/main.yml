@@ -1,4 +1,4 @@
---- 
+---
  # tasks file for role-package-downloader
 - name: retrieve an access token
   ansible.builtin.uri:
@@ -12,12 +12,12 @@
   register: response
 
 - name: retrieve image download URL
-  ansible.builtin.uri: 
+  ansible.builtin.uri:
     url: https://api.access.redhat.com/management/v1/images/{{ rh_product_checksum }}/download
-    follow_redirects: no
+    follow_redirects: false
     headers:
       Authorization: 'Bearer {{ response.json.access_token }}'
-    status_code: 307 
+    status_code: 307
   register: product_info
 
 - name: set result as facts
@@ -26,10 +26,11 @@
     product_filename: "{{ product_info.json.body.filename }}"
 
 - name: retrieve package
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ product_url }}"
     dest: "{{ rh_product_path | default(playbook_dir, true) }}/{{ rh_product_filename | default(product_filename, true) }}"
+    mode: 0755
 
 - name: output
-  debug:
+  ansible.builtin.debug:
     msg: The package {{ rh_product_filename | default(product_filename, true) }} has been downloaded in {{ rh_product_path | default(playbook_dir, true) }}
