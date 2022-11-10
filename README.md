@@ -22,7 +22,7 @@ The only required values are:
 
     rh_api_offline_token - The Red Hat offline token that can be retrieved [here](https://access.redhat.com/management/api)
 
-    rh_product_checksum - The checksum of the package to download. They can be retrieved [here](https://access.redhat.com/downloads/) or you can use some of the common one under *vars* folder
+    rh_product_name - The product you need to download (it can be 'rhel8', 'rhel9', 'aap2')
 
     rh_product_path - The location to save the file to. Defaults to the playbook directory.
 
