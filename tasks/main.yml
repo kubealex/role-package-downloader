@@ -28,7 +28,7 @@
   ansible.builtin.set_fact:
     product_url: "{{ product_info.json.body.href }}"
     product_filename: "{{ product_info.json.body.filename }}"
-    rh_package_path: "{{ rh_product_path | default(playbook_dir, true) }}/{{ rh_product_filename | default(product_filename, true) }}"
+    rh_package_path: "{{ rh_product_path | default('/root', true) }}/{{ rh_product_filename | default(product_filename, true) }}"
 
 - name: retrieve package
   ansible.builtin.get_url:
@@ -38,4 +38,4 @@
 
 - name: output
   ansible.builtin.debug:
-    msg: The package {{ rh_product_filename | default(product_filename, true) }} has been downloaded in {{ rh_product_path | default(playbook_dir, true) }}
+    msg: The package {{ rh_product_filename | default(product_filename, true) }} has been downloaded in {{ rh_product_path | default('/root', true) }}
