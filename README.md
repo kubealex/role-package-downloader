@@ -3,11 +3,6 @@ Package downloader
 
 This role allows downloading ISO and setup bundles for most common RH products. It uses the API token to interact with Red Hat API.
 
-The role saves two facts for further use in the successive tasks:
-
-    product_url - containing the URL of the downloaded file
-    product_filename - containing the file name
-
 The package is downloaded by default in the playbook execution folder. It can be customized via *rh_product_path* variable.
 
 Requirements
