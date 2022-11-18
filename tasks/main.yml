@@ -28,11 +28,12 @@
   ansible.builtin.set_fact:
     product_url: "{{ product_info.json.body.href }}"
     product_filename: "{{ product_info.json.body.filename }}"
+    rh_package_path: "{{ rh_product_path | default(playbook_dir, true) }}/{{ rh_product_filename | default(product_filename, true) }}"
 
 - name: retrieve package
   ansible.builtin.get_url:
     url: "{{ product_url }}"
-    dest: "{{ rh_product_path | default(playbook_dir, true) }}/{{ rh_product_filename | default(product_filename, true) }}"
+    dest: "{{ rh_package_path }}"
     mode: 0755
 
 - name: output
