@@ -1,0 +1,40 @@
+---
+ # tasks file for role-package-downloader
+- name: retrieve an access token
+  ansible.builtin.uri:
+    url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+    body:
+      grant_type: refresh_token
+      client_id: rhsm-api
+      refresh_token: "{{ rh_api_offline_token }}"
+    body_format: form-urlencoded
+    method: POST
+  register: response
+
+- name: Retrieve product checksum
+  ansible.builtin.set_fact:
+    product_checksum: '{{ checksum.rhel8 if rh_product_name == "rhel8" else checksum.rhel9 if rh_product_name == "rhel9" else checksum.aap2 if rh_product_name == "aap2" }}'
+
+- name: retrieve image download URL
+  ansible.builtin.uri:
+    url: https://api.access.redhat.com/management/v1/images/{{ product_checksum }}/download
+    follow_redirects: false
+    headers:
+      Authorization: 'Bearer {{ response.json.access_token }}'
+    status_code: 307
+  register: product_info
+
+- name: set result as facts
+  ansible.builtin.set_fact:
+    product_url: "{{ product_info.json.body.href }}"
+    product_filename: "{{ product_info.json.body.filename }}"
+
+- name: retrieve package
+  ansible.builtin.get_url:
+    url: "{{ product_url }}"
+    dest: "{{ rh_product_path | default(playbook_dir, true) }}/{{ rh_product_filename | default(product_filename, true) }}"
+    mode: 0755
+
+- name: output
+  ansible.builtin.debug:
+    msg: The package {{ rh_product_filename | default(product_filename, true) }} has been downloaded in {{ rh_product_path | default(playbook_dir, true) }}

@@ -1,0 +1,6 @@
+---
+# Checksums for most commont RH packages
+checksum:
+  rhel9: c6942e3ed65947ed48c30589d9c1a752e96c5b94ee8de1923331449fee162cc1
+  rhel8: a6a7418a75d721cc696d3cbdd648b5248808e7fef0f8742f518e43b46fa08139
+  aap2: 39c5f84421585fe0171fc0532d3507d195fc32bf5b74e53bfd4e9bcca7a0fcd0
