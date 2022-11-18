@@ -3,7 +3,7 @@ Package downloader
 
 This role allows downloading ISO and setup bundles for most common RH products. It uses the API token to interact with Red Hat API.
 
-The package is downloaded by default in the playbook execution folder. It can be customized via *rh_product_path* variable.
+The package is downloaded by default in the playbook execution folder. It can be customized via *rh_product_path* and *rh_product_filename* variables.
 
 Requirements
 ------------
@@ -15,13 +15,12 @@ Role Variables
 
 The only required values are:
 
-    rh_api_offline_token - The Red Hat offline token that can be retrieved [here](https://access.redhat.com/management/api)
-
-    rh_product_name - The product you need to download (it can be 'rhel8', 'rhel9', 'aap2')
-
-    rh_product_path - The location to save the file to. Defaults to the playbook directory.
-
-    rh_product_filename - The name of the package if different from the original one.
+| Name | Description | Default |
+| ------------ | ------------ | ------------ |
+| rh_api_offline_token | The Red Hat offline token that can be retrieved [here](https://access.redhat.com/management/api) | Mandatory |
+| rh_product_name | The product you need to download (it can be 'rhel8', 'rhel9', 'aap2') | No default, mandatory |
+| rh_product_path | The location to save the file to | Playbook directory - {{ playbook_dir }} |
+| rh_product_filename | The name of the package if different from the original one | Defaults to the iso/tar name from RH website |
 
 Dependencies
 ------------
