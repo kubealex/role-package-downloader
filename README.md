@@ -37,8 +37,9 @@ Including an example of how to use your role (for instance, with variables passe
         - role: role-package-downloader
           vars:
             rh_api_offline_token: <YOUR TOKEN HERE>
-            rh_product_checksum: "{{ rhel.86.binary }}"
+            rh_product_name: <YOUR PRODUCT HERE - aap2/rhel8/rhel9>
             rh_product_path: <YOUR PATH HERE>
+            rh_product_filename: <YOUR PRODUCT FILENAME HERE - ansible-automation-platform-setup-{{ controller_version }}.tar.gz>
 License
 -------
 
