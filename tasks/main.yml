@@ -28,6 +28,9 @@
   ansible.builtin.set_fact:
     product_url: "{{ product_info.json.body.href }}"
     product_filename: "{{ product_info.json.body.filename }}"
+
+- name: set result as facts
+  ansible.builtin.set_fact:
     rh_package_path: "{{ rh_product_path | default('/root', true) }}/{{ rh_product_filename | default(product_filename, true) }}"
 
 - name: retrieve package
