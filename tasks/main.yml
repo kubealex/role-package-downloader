@@ -14,10 +14,11 @@
 - name: Retrieve product checksum
   ansible.builtin.set_fact:
     product_checksum: '{{ checksum.rhel8 if rh_product_name == "rhel8" else checksum.rhel9 if rh_product_name == "rhel9" else checksum.aap2 if rh_product_name == "aap2" }}'
+  when: rh_product_checksum is not defined
 
 - name: retrieve image download URL
   ansible.builtin.uri:
-    url: https://api.access.redhat.com/management/v1/images/{{ product_checksum }}/download
+    url: https://api.access.redhat.com/management/v1/images/{{ product_checksum | default(rh_product_checksum, true) }}/download
     follow_redirects: false
     headers:
       Authorization: 'Bearer {{ response.json.access_token }}'
