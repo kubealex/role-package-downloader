@@ -37,7 +37,7 @@
   ansible.builtin.get_url:
     url: "{{ product_url }}"
     dest: "{{ rh_package_path }}"
-    mode: 0755
+    mode: 0644
 
 - name: Output
   ansible.builtin.debug:
