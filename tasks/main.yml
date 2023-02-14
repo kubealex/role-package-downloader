@@ -14,7 +14,7 @@
 - name: Retrieve product checksum
   ansible.builtin.set_fact:
     product_checksum: '{{ checksum.rhel8 if rh_product_name == "rhel8" else checksum.rhel9 if rh_product_name == "rhel9" else checksum.aap2 if rh_product_name == "aap2" }}'
-  when: rh_product_checksum is not defined
+  when: rh_product_checksum is not defined or rh_product_checksum == ''
 
 - name: retrieve image download URL
   ansible.builtin.uri:
