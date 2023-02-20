@@ -1,4 +1,12 @@
 ---
+- name: Make sure rh_api_offline_token is defined
+  ansible.builtin.assert:
+    that:
+      - rh_api_offline_token is defined
+      - rh_api_offline_token != ""
+    fail_msg: rh_api_offline_token is not defined or empty
+    success_msg: rh_api_offline_token was defined
+
 - name: Retrieve an access token
   ansible.builtin.uri:
     url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
@@ -9,6 +17,8 @@
     body_format: form-urlencoded
     method: POST
   register: response
+  retries: 10
+  delay: 5
 
 - name: Retrieve product checksum
   ansible.builtin.set_fact:
@@ -23,13 +33,15 @@
       Authorization: 'Bearer {{ response.json.access_token }}'
     status_code: 307
   register: product_info
+  retries: 10
+  delay: 5
 
 - name: Set result as facts
   ansible.builtin.set_fact:
     product_url: "{{ product_info.json.body.href }}"
     product_filename: "{{ product_info.json.body.filename }}"
 
-- name: Set result as facts
+- name: Save package path as fact
   ansible.builtin.set_fact:
     rh_package_path: "{{ rh_product_path | default('/root', true) }}/{{ rh_product_filename | default(product_filename, true) }}"
 
@@ -38,6 +50,8 @@
     url: "{{ product_url }}"
     dest: "{{ rh_package_path }}"
     mode: 0644
+  retries: 10
+  delay: 5
 
 - name: Output
   ansible.builtin.debug:
