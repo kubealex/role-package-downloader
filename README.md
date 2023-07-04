@@ -18,9 +18,10 @@ The only required values are:
 | Name | Description | Default |
 | ------------ | ------------ | ------------ |
 | rh_api_offline_token | The Red Hat offline token that can be retrieved [here](https://access.redhat.com/management/api) | Mandatory |
-| rh_product_name | The product you need to download (it can be 'rhel8', 'rhel9', 'aap2') | No default, mandatory |
+| rh_product_name | The product you need to download (it can be 'rhel8', 'rhel9', 'aap2') | No default, mandatory if rh_product_checksum is not defined |
 | rh_product_path | The location to save the file to | Defaults to /root |
 | rh_product_filename | The name of the package if different from the original one | Defaults to the iso/tar name from RH website |
+| rh_product_checksum | The checksum of the file to download | No default, mandatory if rh_product_name is not defined |
 
 Output
 ------------
