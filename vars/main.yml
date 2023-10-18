@@ -1,5 +1,6 @@
 ---
 # Checksums for most commont RH packages
+# the checksum can be found on the download portal under each individual ISO or package
 checksum:
   rhel9: a18bf014e2cb5b6b9cee3ea09ccfd7bc2a84e68e09487bb119a98aa0e3563ac2
   rhel8: 517abcc67ee3b7212f57e180f5d30be3e8269e7a99e127a3399b7935c7e00a09

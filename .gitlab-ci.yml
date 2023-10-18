@@ -1,0 +1,33 @@
+---
+stages:
+  - check
+  - build
+
+lint-common:
+  stage: check
+  script:
+    - ansible-lint -r .
+
+trigger_main:
+  stage: build
+  trigger:
+    project: ansible-ssa/collection-ansible_ssa-general
+    branch: main
+  only:
+    - main
+
+trigger_release:
+  stage: build
+  trigger:
+    project: ansible-ssa/collection-ansible_ssa-general
+    branch: release
+  only:
+    - release
+
+trigger_pages:
+  stage: build
+  trigger:
+    project: ansible-ssa/pages
+    branch: main
+  only:
+    - main
