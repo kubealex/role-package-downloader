@@ -15,7 +15,7 @@ The only required values are:
 | Name                 | Description                                                                                      | Default                                                     |
 | -------------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------- |
 | rh_api_offline_token | The Red Hat offline token that can be retrieved [here](https://access.redhat.com/management/api) | Mandatory                                                   |
-| rh_product_name      | The product you need to download (it can be 'rhel8', 'rhel9', 'aap2', 'aap2_containerized')      | No default, mandatory if rh_product_checksum is not defined |
+| rh_product_name      | The product you need to download (it can be 'rhel8', 'rhel9', 'aap2_containerized')      | No default, mandatory if rh_product_checksum is not defined |
 | rh_product_path      | The location to save the file to                                                                 | Defaults to /root                                           |
 | rh_product_filename  | The name of the package if different from the original one                                       | Defaults to the iso/tar name from RH website                |
 | rh_product_checksum  | The checksum of the file to download                                                             | No default, mandatory if rh_product_name is not defined     |
@@ -39,7 +39,7 @@ Including an example of how to use your role (for instance, with variables passe
             rh_api_offline_token: <YOUR TOKEN HERE>
             rh_product_name: <YOUR PRODUCT HERE - aap2/rhel8/rhel9>
             rh_product_path: <YOUR PATH HERE>
-            rh_product_filename: <YOUR PRODUCT FILENAME HERE - ansible-automation-platform-setup-{{ controller_version }}.tar.gz>
+            rh_product_filename: <YOUR PRODUCT FILENAME HERE - ansible-automation-platform-containerized-setup-{{ controller_version }}.tar.gz>
             rh_product_checksum: <YOUR PRODUCT CHECKSUM HERE - 39c5f84421585fe0171fc0532d3507d195fc32bf5b74e53bfd4e9bcca7a0fcd0 >
 
 ## License
