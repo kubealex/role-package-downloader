@@ -3,4 +3,4 @@
 checksum:
   rhel9: 398561d7b66f1a4bf23664f4aa8f2cfbb3641aa2f01a320068e86bd1fc0e9076
   rhel8: 9b3c8e31bc2cdd2de9cf96abb3726347f5840ff3b176270647b3e66639af291b
-  aap2_container: 99eedbbbca7a9d6308f5af908db3bde11d8a6e49034fdb1a88bc18a58ad86e99 
+  aap2_containerized: 99eedbbbca7a9d6308f5af908db3bde11d8a6e49034fdb1a88bc18a58ad86e99 
